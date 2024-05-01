@@ -12,9 +12,8 @@ public class Contacto {
 		super();
 	}
 
-	public Contacto(long idContacto, String email, String movil, String fijo, Cliente cliente) {
+	public Contacto(String email, String movil, String fijo, Cliente cliente) {
 		super();
-		this.idContacto = idContacto;
 		this.email = email;
 		this.movil = movil;
 		this.fijo = fijo;
