@@ -11,9 +11,19 @@ public class Cliente {
 	private int dni;
 	private LocalDate fechaDeNacimiento;
 	private boolean baja;
+	private Contacto contacto;
 
 	public Cliente() {
 		super();
+	}
+
+	public Cliente(String apellido, String nombre, int dni, LocalDate fechaDeNacimiento, Contacto contacto) {
+		super();
+		this.apellido = apellido;
+		this.nombre = nombre;
+		this.dni = dni;
+		this.fechaDeNacimiento = fechaDeNacimiento;
+		this.contacto = contacto;
 	}
 
 	public Cliente(String apellido, String nombre, int dni, LocalDate fechaDeNacimiento) {
@@ -72,6 +82,14 @@ public class Cliente {
 		this.baja = baja;
 	}
 
+	public Contacto getContacto() {
+		return contacto;
+	}
+
+	public void setContacto(Contacto contacto) {
+		this.contacto = contacto;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(apellido, baja, dni, fechaDeNacimiento, idCliente, nombre);
@@ -87,11 +105,19 @@ public class Cliente {
 	@Override
 	public String toString() {
 		return "Cliente [idCliente=" + idCliente + ", apellido=" + apellido + ", nombre=" + nombre + ", dni=" + dni
-				+ ", fechaDeNacimiento=" + fechaDeNacimiento + ", baja=" + baja + "]";
+				+ ", fechaDeNacimiento=" + fechaDeNacimiento + ", baja=" + baja +",contacto: " + contacto + "]";
 	}
 
 	public Cliente modificar(Cliente cliente, String nombre, String apellido, int dni, LocalDate fechaDeNacimiento) {
 		Cliente clienteNuevo = new Cliente(apellido, nombre, dni, fechaDeNacimiento);
+		clienteNuevo.setIdCliente(cliente.getIdCliente());
+
+		return clienteNuevo;
+	}
+
+	public Cliente modificar(Cliente cliente, String nombre, String apellido, int dni, LocalDate fechaDeNacimiento,
+			Contacto contacto) {
+		Cliente clienteNuevo = new Cliente(apellido, nombre, dni, fechaDeNacimiento, contacto);
 		clienteNuevo.setIdCliente(cliente.getIdCliente());
 
 		return clienteNuevo;
