@@ -10,7 +10,7 @@ public class TestEliminarCliente {
 		ClienteABM abm = new ClienteABM();
 		
 		try {
-			abm.eliminar(2L);
+			abm.eliminar(5L);
 			System.out.printf("El cliente ha sido eliminado con éxito");
 		} catch (HibernateException he) {
 			throw he;
