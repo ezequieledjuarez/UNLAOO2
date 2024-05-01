@@ -3,15 +3,16 @@ package test;
 import org.hibernate.HibernateException;
 
 import negocio.ClienteABM;
+import negocio.ContactoABM;
 
-public class TestEliminarCliente {
+public class TestEliminarContacto {
 	public static void main(String[] args) throws Exception {
 
-		ClienteABM abm = new ClienteABM();
+		ContactoABM abm = new ContactoABM();
 		
 		try {
-			abm.eliminar(5L);
-			System.out.printf("El cliente ha sido eliminado con éxito");
+			abm.eliminar(6L);
+			System.out.printf("El contacto ha sido eliminado con éxito");
 		} catch (HibernateException he) {
 			throw he;
 		}

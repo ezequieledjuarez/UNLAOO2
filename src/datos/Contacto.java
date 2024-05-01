@@ -60,6 +60,12 @@ public class Contacto {
 		this.cliente = cliente;
 	}
 
+	public Contacto modificar(Contacto contacto, String nuevoEmail, String nuevoMovil, String nuevoFijo) {
+		Contacto contactoActualizado = new Contacto(nuevoEmail, nuevoMovil, nuevoFijo, cliente);
+		contactoActualizado.setIdContacto(contacto.getIdContacto());
+		return contactoActualizado;
+	}
+	
 	@Override
 	public String toString() {
 		return "Contacto [idContacto=" + idContacto + ", email=" + email + ", movil=" + movil + ",	fijo=" + fijo + "]";

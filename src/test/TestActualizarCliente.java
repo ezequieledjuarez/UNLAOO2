@@ -10,13 +10,13 @@ public class TestActualizarCliente {
 
 	ClienteABM abm = new ClienteABM();
 
-	Cliente cliente = abm.traer(1L);
+	Cliente cliente = abm.traer(4L);
 	
 	Cliente clienteAModificar = cliente.modificar(cliente, "Juarez", "Ezequiel Eduardo", 58185812, LocalDate.of(1994, 8, 3));
 
 	try{
 		abm.modificarCliente(clienteAModificar);
-		System.out.println("El cliente se modifició con éxito");
+		System.out.println("El cliente se modificó con éxito");
 	}catch (Exception e) {
 		throw e;
 	}
