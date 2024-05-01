@@ -4,12 +4,15 @@ import java.time.LocalDate;
 import java.util.List;
 
 import dao.ClienteDao;
+import dao.ContactoDao;
 import datos.Cliente;
+import datos.Contacto;
 
 public class ClienteABM {
 
 	ClienteDao dao = new ClienteDao();
-
+	ContactoDao contactoDAO = new ContactoDao();
+	
 	public Cliente traer(long idCliente) {
 		return dao.traer(idCliente);
 	}
@@ -18,6 +21,23 @@ public class ClienteABM {
 		return dao.traer(dni);
 	}
 
+	public int agregar(String nombre, String apellido, int dni, LocalDate fechaDeNacimiento, Contacto contacto) throws Exception {
+		List<Cliente> listaClientes = traer();
+		int iterador = 0;
+		Cliente c = new Cliente(apellido, nombre, dni, fechaDeNacimiento, contacto);
+		// consultar si existe un cliente con el mismo dni, y si existe, arrojar la
+		// Excepcion
+
+		while (!listaClientes.isEmpty() && iterador < listaClientes.size()) {
+			if (esMismoDNI(listaClientes.get(iterador), dni))
+				throw new Exception("El cliente que se intenta agregar ya existe en la base de datos");
+			else
+				iterador++;
+		}
+
+		return dao.agregarCliente(c);
+	}
+	
 	public int agregar(String nombre, String apellido, int dni, LocalDate fechaDeNacimiento) throws Exception {
 		List<Cliente> listaClientes = traer();
 		int iterador = 0;
@@ -53,9 +73,17 @@ public class ClienteABM {
 		// Implementar que si es null que arroje la excepción la Excepción de que el
 		// cliente no existe
 		Cliente c = dao.traer(idCliente);
+		
 		if (null == c)
 			throw new Exception("El id del cliente que se intenta eliminar no existe en la base de datos");
-		else
+		
+		if(c.getContacto() == null) {
+			dao.eliminar(c);
+		}else {
+			contactoDAO.eliminar(c.getContacto());
+		}
+			
+
 			dao.eliminar(c);
 	}
 

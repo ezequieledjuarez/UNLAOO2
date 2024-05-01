@@ -30,8 +30,10 @@ public class ContactoABM {
 	public void modificar(Contacto c) throws Exception {
 		Contacto aModificar = dao.traer(c.getIdContacto());
 	
-		if(!existeEmail(c) || null == aModificar) 
+		if(null == aModificar) 
 			throw new Exception("El contacto no pudo ser actualizado");
+		else if(!existeEmail(c))
+			throw new Exception("El mail que se intenta registrar ya existe");
 		else
 			dao.actualizarObjeto(c);
 	}
@@ -39,7 +41,7 @@ public class ContactoABM {
 	private boolean existeEmail(Contacto c) {
 		Contacto aBuscar = dao.traer(c.getEmail());
 		
-		return c.getIdContacto() != aBuscar.getIdContacto();
+		return null == aBuscar || c.getIdContacto() == aBuscar.getIdContacto();
 	}
 	
 	public void eliminar(long idCliente) throws Exception {
