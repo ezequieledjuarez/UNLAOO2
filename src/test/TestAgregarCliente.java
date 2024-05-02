@@ -6,13 +6,11 @@ import org.hibernate.HibernateException;
 
 import datos.Cliente;
 import negocio.ClienteABM;
-import negocio.ContactoABM;
 
 public class TestAgregarCliente {
 	public static void main(String[] args) throws Exception {
 
 		ClienteABM abm = new ClienteABM();
-		ContactoABM abmContacto = new ContactoABM();
 		
 		long ultimoIdCliente = 0L;
 		
@@ -32,7 +30,7 @@ public class TestAgregarCliente {
 		
 		try {
 			Cliente cliente = abm.traer(38147191);
-			abmContacto.agregar("eze@unla.com", "11141411", "42141144", cliente);
+			//abmContacto.agregar("eze@unla.com", "11141411", "42141144", cliente);
 		}catch (Exception e) {
 			throw e;
 		}
@@ -40,7 +38,7 @@ public class TestAgregarCliente {
 		
 		try {
 			Cliente cliente = abm.traer(38147191);
-			abmContacto.agregar("eze@unla.com", "11141411", "42141144", cliente);
+			//abmContacto.agregar("eze@unla.com", "11141411", "42141144", cliente);
 		}catch (Exception e) {
 			throw e;
 		}

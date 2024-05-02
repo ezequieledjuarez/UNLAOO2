@@ -3,6 +3,7 @@ package dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -27,7 +28,7 @@ public class ClienteDao {
 
 	public int agregarCliente(Cliente objeto) {
 		int id = 0;
-		
+
 		try {
 			iniciaOperacion();
 			id = Integer.parseInt(session.save(objeto).toString());
@@ -87,25 +88,27 @@ public class ClienteDao {
 		return cliente;
 	}
 
-	public List<Cliente> traer(){
+	public List<Cliente> traer() {
 		List<Cliente> lista = new ArrayList<>();
 		try {
 			iniciaOperacion();
-			Query<Cliente> query = session.createQuery("from Cliente c order by c.apellido asc, c.nombre asc", Cliente.class);
+			Query<Cliente> query = session.createQuery("from Cliente c order by c.apellido asc, c.nombre asc",
+					Cliente.class);
 			lista = query.getResultList();
-		}finally {
+		} finally {
 			session.close();
 		}
 		return lista;
 	}
-	
-	public Cliente traerClienteYContacto(long idCliente) {
+
+	public Cliente traerClienteYPrestamos(long idCliente) {
 		Cliente objeto = null;
 		try {
 			iniciaOperacion();
-			String hql = "from Cliente c inner join fetch c.contacto where c.idCliente = :idCliente";
+			String hql = "from Cliente c where c.idCliente = :idCliente";
 			objeto = (Cliente) session.createQuery(hql).setParameter("idCliente", idCliente).uniqueResult();
-		}finally {
+			Hibernate.initialize(objeto.getPrestamos());
+		} finally {
 			session.close();
 		}
 		return objeto;

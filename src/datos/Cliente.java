@@ -2,6 +2,7 @@ package datos;
 
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.Set;
 
 public class Cliente {
 
@@ -11,19 +12,20 @@ public class Cliente {
 	private int dni;
 	private LocalDate fechaDeNacimiento;
 	private boolean baja;
-	private Contacto contacto;
+	private Set<Prestamo> prestamos;
 
 	public Cliente() {
 		super();
 	}
 
-	public Cliente(String apellido, String nombre, int dni, LocalDate fechaDeNacimiento, Contacto contacto) {
+	public Cliente(String apellido, String nombre, int dni, LocalDate fechaDeNacimiento, Set<Prestamo> prestamo) {
 		super();
 		this.apellido = apellido;
 		this.nombre = nombre;
 		this.dni = dni;
 		this.fechaDeNacimiento = fechaDeNacimiento;
-		this.contacto = contacto;
+		this.prestamos = prestamo;
+
 	}
 
 	public Cliente(String apellido, String nombre, int dni, LocalDate fechaDeNacimiento) {
@@ -82,12 +84,12 @@ public class Cliente {
 		this.baja = baja;
 	}
 
-	public Contacto getContacto() {
-		return contacto;
+	public Set<Prestamo> getPrestamos() {
+		return prestamos;
 	}
 
-	public void setContacto(Contacto contacto) {
-		this.contacto = contacto;
+	public void setPrestamos(Set<Prestamo> prestamos) {
+		this.prestamos = prestamos;
 	}
 
 	@Override
@@ -105,7 +107,7 @@ public class Cliente {
 	@Override
 	public String toString() {
 		return "Cliente [idCliente=" + idCliente + ", apellido=" + apellido + ", nombre=" + nombre + ", dni=" + dni
-				+ ", fechaDeNacimiento=" + fechaDeNacimiento + ", baja=" + baja +",contacto: " + contacto + "]";
+				+ ", fechaDeNacimiento=" + fechaDeNacimiento + ", baja=" + baja + "]";
 	}
 
 	public Cliente modificar(Cliente cliente, String nombre, String apellido, int dni, LocalDate fechaDeNacimiento) {
@@ -116,8 +118,8 @@ public class Cliente {
 	}
 
 	public Cliente modificar(Cliente cliente, String nombre, String apellido, int dni, LocalDate fechaDeNacimiento,
-			Contacto contacto) {
-		Cliente clienteNuevo = new Cliente(apellido, nombre, dni, fechaDeNacimiento, contacto);
+			Set<Prestamo> prestamo) {
+		Cliente clienteNuevo = new Cliente(apellido, nombre, dni, fechaDeNacimiento, prestamo);
 		clienteNuevo.setIdCliente(cliente.getIdCliente());
 
 		return clienteNuevo;
