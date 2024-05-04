@@ -2,6 +2,7 @@ package datos;
 
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.Set;
 
 public class Prestamo {
 
@@ -11,19 +12,21 @@ public class Prestamo {
 	private double interes;
 	private int cantCuotas;
 	private Cliente cliente;
-
+	private boolean cancelado;
+	private Set<Cuota> cuotas;
 	public Prestamo() {
 		super();
 	}
 
-	public Prestamo(long idPrestamo, LocalDate fecha, double monto, double interes, int cantCuotas, Cliente cliente) {
+	public Prestamo(LocalDate fecha, double monto, double interes, int cantCuotas, Cliente cliente,Set<Cuota> cuotas) {
 		super();
-		this.idPrestamo = idPrestamo;
 		this.fecha = fecha;
 		this.monto = monto;
 		this.interes = interes;
 		this.cantCuotas = cantCuotas;
 		this.cliente = cliente;
+		this.cancelado = false;
+		this.cuotas = cuotas;
 	}
 
 	public long getIdPrestamo() {
@@ -72,6 +75,24 @@ public class Prestamo {
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+
+	public boolean isCancelado() {
+		return cancelado;
+	}
+
+	public void setCancelado(boolean cancelado) {
+		this.cancelado = cancelado;
+	}
+
+	
+	
+	public Set<Cuota> getCuotas() {
+		return cuotas;
+	}
+
+	public void setCuotas(Set<Cuota> cuotas) {
+		this.cuotas = cuotas;
 	}
 
 	@Override
