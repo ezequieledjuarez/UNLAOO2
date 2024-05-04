@@ -11,33 +11,69 @@ public class Cuota {
 	private double saldoPendiente;
 	private double amortizacion;
 	private double interesCuota;
-	private double cuota;
+	private double valorCuota;
 	private double deuda;
 	private boolean cancelada;
 	private LocalDate fechaDePago;
 	private double punitorios;
+	Prestamo prestamo;
 
 	public Cuota() {
 		super();
 	}
 
-
 	public Cuota(int nroCuota, LocalDate fechaVencimiento, double saldoPendiente, double amortizacion,
 			double interesCuota, double couta, double deuda, boolean cancelada, LocalDate fechaDePago,
-			double punitorios) {
+			double punitorios, Prestamo prestamo) {
 		super();
 		this.nroCuota = nroCuota;
 		this.fechaVencimiento = fechaVencimiento;
-		this.saldoPendiente = saldoPendiente;
-		this.amortizacion = amortizacion;
-		this.interesCuota = interesCuota;
-		this.cuota = couta;
-		this.deuda = deuda;
+		setSaldoPendiente(prestamo);
+		setAmortizacion(prestamo);
+		setInteresCuota(prestamo);
+		setValorCuota();
+		setDeuda();
 		this.cancelada = cancelada;
 		this.fechaDePago = fechaDePago;
 		this.punitorios = punitorios;
 	}
 
+	
+	
+	private void setDeuda() {
+		this.deuda = this.saldoPendiente -this.amortizacion;
+		
+	}
+
+	private void setValorCuota() {
+		this.valorCuota = this.amortizacion + this.interesCuota;
+		
+	}
+
+	private void setInteresCuota(Prestamo prestamo) {
+		this.interesCuota = saldoPendiente * prestamo.getInteres();
+		
+	}
+
+	private void setAmortizacion(Prestamo prestamo) {
+		
+		double exponente = 1 == nroCuota 
+				? prestamo.getCantCuotas()
+				: prestamo.getCantCuotas() - nroCuota -1;
+		
+		double numerador = saldoPendiente * prestamo.getInteres();
+		double denominador = Math.pow(1+prestamo.getInteres(), exponente)-1;
+		
+		this.amortizacion = numerador/denominador;
+		
+	}
+
+	private void setSaldoPendiente(Prestamo prestamo) {
+		if (1 == nroCuota)
+			this.saldoPendiente = prestamo.getMonto();
+		else
+			this.saldoPendiente = prestamo.getMonto() - this.amortizacion;
+	}
 
 	public int getIdCuota() {
 		return idCuota;
@@ -119,15 +155,21 @@ public class Cuota {
 		this.punitorios = punitorios;
 	}
 
-	public double getCuota() {
-		return cuota;
+	public double getValorCuota() {
+		return valorCuota;
 	}
 
-
-	public void setCuota(double cuota) {
-		this.cuota = cuota;
+	public void setValorCuota(double cuota) {
+		this.valorCuota = cuota;
 	}
 
+	public Prestamo getPrestamo() {
+		return prestamo;
+	}
+
+	public void setPrestamo(Prestamo prestamo) {
+		this.prestamo = prestamo;
+	}
 
 	@Override
 	public String toString() {
