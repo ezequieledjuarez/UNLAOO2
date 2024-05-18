@@ -2,6 +2,7 @@
 package datos;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -19,7 +20,7 @@ public class Prestamo {
 		super();
 	}
 
-	public Prestamo(LocalDate fecha, double monto, double interes, int cantCuotas, Cliente cliente,Set<Cuota> cuotas) {
+	public Prestamo(LocalDate fecha, double monto, double interes, int cantCuotas, Cliente cliente) {
 		super();
 		this.fecha = fecha;
 		this.monto = monto;
@@ -27,7 +28,16 @@ public class Prestamo {
 		this.cantCuotas = cantCuotas;
 		this.cliente = cliente;
 		this.cancelado = false;
-		this.cuotas = cuotas;
+		this.cuotas = agregarCuotas();
+	}
+
+	private Set<Cuota> agregarCuotas() {
+		Set<Cuota> nuevasCuotas = new HashSet<Cuota>();
+		for(int i = 1; i <= this.cantCuotas; i++) {
+			Cuota cuota = new Cuota(i, false, this.fecha, 0, this);
+			nuevasCuotas.add(cuota);
+		}
+		return nuevasCuotas;
 	}
 
 	public long getIdPrestamo() {

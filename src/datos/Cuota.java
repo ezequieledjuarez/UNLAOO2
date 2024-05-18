@@ -22,12 +22,10 @@ public class Cuota {
 		super();
 	}
 
-	public Cuota(int nroCuota, LocalDate fechaVencimiento, double saldoPendiente, double amortizacion,
-			double interesCuota, double couta, double deuda, boolean cancelada, LocalDate fechaDePago,
-			double punitorios, Prestamo prestamo) {
+	public Cuota(int nroCuota, boolean cancelada, LocalDate fechaDePago, double punitorios, Prestamo prestamo) {
 		super();
 		this.nroCuota = nroCuota;
-		this.fechaVencimiento = fechaVencimiento;
+		setFechaVencimiento(prestamo);
 		setSaldoPendiente(prestamo);
 		setAmortizacion(prestamo);
 		setInteresCuota(prestamo);
@@ -38,34 +36,30 @@ public class Cuota {
 		this.punitorios = punitorios;
 	}
 
-	
-	
 	private void setDeuda() {
-		this.deuda = this.saldoPendiente -this.amortizacion;
-		
+		this.deuda = this.saldoPendiente - this.amortizacion;
+
 	}
 
 	private void setValorCuota() {
 		this.valorCuota = this.amortizacion + this.interesCuota;
-		
+
 	}
 
 	private void setInteresCuota(Prestamo prestamo) {
 		this.interesCuota = saldoPendiente * prestamo.getInteres();
-		
+
 	}
 
 	private void setAmortizacion(Prestamo prestamo) {
-		
-		double exponente = 1 == nroCuota 
-				? prestamo.getCantCuotas()
-				: prestamo.getCantCuotas() - nroCuota -1;
-		
+
+		double exponente = 1 == this.nroCuota ? prestamo.getCantCuotas() : prestamo.getCantCuotas() - nroCuota - 1;
+
 		double numerador = saldoPendiente * prestamo.getInteres();
-		double denominador = Math.pow(1+prestamo.getInteres(), exponente)-1;
-		
-		this.amortizacion = numerador/denominador;
-		
+		double denominador = Math.pow(1 + prestamo.getInteres(), exponente) - 1;
+
+		this.amortizacion = numerador / denominador;
+
 	}
 
 	private void setSaldoPendiente(Prestamo prestamo) {
@@ -95,8 +89,8 @@ public class Cuota {
 		return fechaVencimiento;
 	}
 
-	public void setFechaVencimiento(LocalDate fechaVencimiento) {
-		this.fechaVencimiento = fechaVencimiento;
+	public void setFechaVencimiento(Prestamo prestamo) {
+		this.fechaVencimiento = prestamo.getFecha().plusMonths(this.nroCuota);
 	}
 
 	public double getSaldoPendiente() {
