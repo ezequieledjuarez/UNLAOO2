@@ -15,5 +15,6 @@
 		<property column="deuda" name="deuda" type="double"></property>
 		<property column="fechaDePago" name="fechaDePago" type="LocalDate"/>
 		<property column="punitorios" name="punitorios" type="double"></property>
+		<many-to-one name="prestamo" class="datos.Prestamo" column="idPrestamo" not-null="true"/>
 	</class>
 </hibernate-mapping>
