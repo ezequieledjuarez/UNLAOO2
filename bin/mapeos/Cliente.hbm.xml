@@ -1,0 +1,22 @@
+<hibernate-mapping>
+	<class name="datos.Cliente" table="cliente">
+		<id column="idCliente" name="idCliente">
+			<generator class="identity" />
+		</id>
+		<property name="nroCliente" column="nroCliente" type="string" />
+		<joined-subclass name="datos.PersonaJuridica"
+			table="personajuridica">
+			<key column="idPersonaJuridica" />
+			<property column="razonSocial" name="razonSocial"
+				type="string" />
+			<property column="cuit" name="cuit" type="string" />
+		</joined-subclass>
+		<joined-subclass name="datos.PersonaFisica"
+			table="personafisica">
+			<key column="idPersonaFisica" />
+			<property column="apellido" name="apellido" type="string" />
+			<property column="nombre" name="nombre" type="string" />
+			<property column="dni" name="dni" type="int" />
+		</joined-subclass>
+	</class>
+</hibernate-mapping>
