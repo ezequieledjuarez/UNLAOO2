@@ -32,19 +32,18 @@ public class ClienteABM {
 		String mensaje = "";
 		if (cliente instanceof PersonaFisica) {
 			clienteValido = validarPersonaFisica((PersonaFisica) cliente);
-			mensaje="La razon social que se intenta agregar ya está en uso";
+			mensaje = "El dni que se intenta agregar ya está en uso";
 		}
-			
+
 		else {
 			clienteValido = validarPersonaJuridica((PersonaJuridica) cliente);
-			mensaje="El dni que se intenta agregar ya está en uso";
-		}
-			
+			mensaje = "La razon social que se intenta agregar ya está en uso";
 
-		if(!clienteValido)
-			throw new Exception("No se puede agregar el cliente");
-		
-		
+		}
+
+		if (!clienteValido)
+			throw new Exception(mensaje);
+
 		return clienteDao.agregarCliente(cliente);
 	}
 
@@ -58,6 +57,7 @@ public class ClienteABM {
 
 			if (listaClientes.get(i) instanceof PersonaJuridica) {
 				existeRazonSocial = validarRazonSocial(razonSocial, (PersonaJuridica) listaClientes.get(i));
+				i++;
 			} else {
 				i++;
 			}
@@ -67,12 +67,31 @@ public class ClienteABM {
 		return existeRazonSocial;
 	}
 
+	private boolean validarPersonaFisica(PersonaFisica cliente) throws Exception {
+		int dni = cliente.getDni();
+		boolean existeDni = true;
+		int i = 0;
+		List<Cliente> listaClientes = traerListaClientes();
+
+		while (listaClientes != null && existeDni && i < listaClientes.size()) {
+
+			if (listaClientes.get(i) instanceof PersonaFisica) {
+				existeDni = validarDNI(dni, (PersonaFisica) listaClientes.get(i));
+				i++;
+			} else {
+				i++;
+			}
+		}
+		return existeDni;
+
+	}
+
 	private boolean validarRazonSocial(String razonSocial, PersonaJuridica cliente) {
 		return cliente.getRazonSocial().equalsIgnoreCase(razonSocial);
 	}
 
-	private boolean validarPersonaFisica(PersonaFisica cliente) throws Exception {
-		// TODO Auto-generated method stub
+	private boolean validarDNI(int dni, PersonaFisica cliente) throws Exception {
+		return cliente.getDni() == dni;
 
 	}
 }

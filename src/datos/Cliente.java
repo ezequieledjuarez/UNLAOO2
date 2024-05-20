@@ -1,6 +1,6 @@
 package datos;
 
-public class Cliente {
+public abstract class Cliente {
 
 	private int idCliente;
 	private String nroCliente;
