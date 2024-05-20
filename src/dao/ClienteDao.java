@@ -48,5 +48,19 @@ public class ClienteDao {
 		}
 		return lista;
 	}
+	
+	public int agregarCliente(Cliente cliente) {
+		int id = 0;
+		try {
+			iniciaOperacion();
+			id = Integer.parseInt(session.save(cliente).toString());
+			tx.commit();
+		}catch (HibernateException e) {
+			manejaExcepcion(e);
+		}finally {
+			session.close();
+		}
+		return id;
+	}
 
 }
